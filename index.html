@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J.K. Rowling | Official Fan Portfolio</title>
+    <style>
+        /* Global Styles & Variables */
+        :root {
+            --primary-color: #1a120b; /* Deep Mahogany */
+            --secondary-color: #3c2a21; /* Warm Walnut */
+            --accent-color: #d4af37; /* Wizarding Gold */
+            --text-color: #e5e5e5;
+            --light-bg: #f5f2eb;
+            --dark-card: #2b1c12;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', serif;
+        }
+
+        body {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Navigation Header */
+        header {
+            background-color: var(--secondary-color);
+            border-bottom: 2px solid var(--accent-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        nav ul li a:hover, nav ul li a.active {
+            color: var(--accent-color);
+            border-bottom: 1px solid var(--accent-color);
+        }
+
+        /* Content Sections */
+        .section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: none; /* Hidden by default, revealed by JS */
+        }
+
+        .section.active-section {
+            display: block;
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--secondary-color);
+            padding-bottom: 10px;
+        }
+
+        /* Home Page Specifics */
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+            background: linear-gradient(rgba(26, 18, 11, 0.8), rgba(26, 18, 11, 0.9)), url('https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&q=80&w=1200') no-repeat center center/cover;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            border: 1px solid var(--secondary-color);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            padding: 12px 30px;
+            border: 2px solid var(--accent-color);
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #bfa030;
+            border-color: #bfa030;
+        }
+
+        .btn.btn-secondary {
+            background-color: transparent;
+            color: var(--accent-color);
+        }
+
+        .btn.btn-secondary:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+
+        .latest-updates {
+            text-align: center; 
+            max-width: 800px; 
+            margin: 40px auto;
+        }
+
+        .latest-updates .quote {
+            font-style: italic; 
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+
+        /* About Page Grid */
+        .about-layout {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .profile-img {
+            width: 100%;
+            border-radius: 8px;
+            border: 3px solid var(--accent-color);
+            background-color: var(--secondary-color);
+            min-height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-color);
+            font-style: italic;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        /* Books Page Card Grid */
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .book-card {
+            background-color: var(--dark-card);
+            border: 1px solid var(--secondary-color);
+            border-radius: 8px;
+            padding: 25px;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+        }
+
+        .book-tag {
+            color: var(--accent-color);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .book-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        /* News & FAQ Accordion */
+        .faq-item {
+            background-color: var(--dark-card);
+            margin-bottom: 15px;
+            border-radius: 5px;
+            overflow: hidden;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .faq-question {
+            padding: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(60, 42, 33, 0.3);
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            color: #ccc;
+        }
+
+        .faq-item.open .faq-answer {
+            padding: 20px;
+            max-height: 200px;
+        }
+
+        /* Footer & Samira Credits */
+        footer {
+            background-color: #0f0a06;
+            text-align: center;
+            padding: 30px;
+            margin-top: 60px;
+            border-top: 1px solid var(--secondary-color);
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        footer .credit {
+            margin-top: 5px;
+            color: var(--accent-color);
+            font-size: 1rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 768px) {
+            .nav-container { flex-direction: column; gap: 15px; }
+            nav ul li { margin: 0 10px; }
+            .about-layout { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">J.K. Rowling</div>
+            <nav>
+                <ul>
+                    <li><a id="nav-home" class="nav-link active" onclick="switchTab('home')">Home</a></li>
+                    <li><a id="nav-about" class="nav-link" onclick="switchTab('about')">About</a></li>
+                    <li><a id="nav-books" class="nav-link" onclick="switchTab('books')">Books</a></li>
+                    <li><a id="nav-faq" class="nav-link" onclick="switchTab('faq')">Insights & FAQ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        
+        <section id="home" class="section active-section">
+            <div class="hero">
+                <h1>The Magic of Storytelling</h1>
+                <p>Welcome to the digital realm of J.K. Rowling, the visionary mind behind the Wizarding World, compelling contemporary dramas, and gripping crime fiction.</p>
+                <div class="hero-buttons">
+                    <button class="btn" onclick="switchTab('books')">Explore Her Works</button>
+                    <a href="https://www.jkrowling.com" target="_blank" class="btn btn-secondary">Visit Official Website ↗</a>
+                </div>
+            </div>
+            
+            <div class="latest-updates">
+                <h2>Latest Updates</h2>
+                <p class="quote">"Words are, in my not-so-humble opinion, our most inexhaustible source of magic."</p>
+                <p>From writing in local Edinburgh cafés to changing the landscape of modern literature forever, discover the stories behind the creator of Harry Potter and Robert Galbraith's Cormoran Strike series.</p>
+            </div>
+        </section>
+
+        <section id="about" class="section">
+            <h2>About J.K. Rowling</h2>
+            <div class="about-layout">
+                <div class="profile-img">
+                    <p style="padding: 20px; text-align: center;">[ Portrait of J.K. Rowling / Author Desk Image Placeholder ]</p>
+                </div>
+                <div class="about-text">
+                    <p><strong>Joanne Rowling</strong> (born 31 July 1965), better known by her pen name <strong>J.K. Rowling</strong>, is a British author, philanthropist, and screenwriter. She is most famous for writing the <em>Harry Potter</em> fantasy series, which has won multiple awards, sold over 600 million copies, and become the best-selling book series in history.</p>
+                    
+                    <p>The idea for Harry Potter came to her in 1990 while stuck on a delayed train from Manchester to London. Over the next seven years, she faced severe hardships—including the passing of her mother, divorce, and single parenthood—before completing <em>Harry Potter and the Philosopher’s Stone</em> in 1997.</p>
+                    
+                    <p>Beyond the wizarding realm, Rowling writes acclaimed adult crime fiction under the pseudonym <strong>Robert Galbraith</strong>. She is also deeply committed to philanthropic causes, supporting charities such as <em>Lumos</em> (which helps institutionalized children find families) and the Volant Charitable Trust.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="books" class="section">
+            <h2>Published Bibliography</h2>
+            <div class="books-grid">
+                
+                <div class="book-card">
+                    <span class="book-tag">The Wizarding World</span>
+                    <h3>Harry Potter Series</h3>
+                    <p>A seven-book masterpiece tracking the life of a young wizard and his battle against the dark wizard Lord Voldemort. Translated into over 80 languages.</p>
+                </div>
+
+                <div class="book-card">
+                    <span class="book-tag">Crime Fiction (As Robert Galbraith)</span>
+                    <h3>Cormoran Strike Series</h3>
+                    <p>A gripping, critically acclaimed contemporary detective series featuring war veteran turned private investigator Cormoran Strike and his partner Robin Ellacott.</p>
+                </div>
+
+                <div class="book-card">
+                    <span class="book-tag">Children's Fiction</span>
+                    <h3>The Ickabog & The Christmas Pig</h3>
+                    <p>Stand-alone, heartwarming, and imaginative fairy tales tailored for younger audiences, filled with magic, adventure, and timeless lessons.</p>
+                </div>
+
+                <div class="book-card">
+                    <span class="book-tag">Adult Fiction</span>
+                    <h3>The Casual Vacancy</h3>
+                    <p>Rowling's first major foray into contemporary social drama for adults, focusing on a local election in a seemingly idyllic English town fractured by dark undercurrents.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="faq" class="section">
+            <h2>Frequently Asked Questions & Trivia</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">Where do you get your character names? <span>+</span></div>
+                <div class="faq-answer">
+                    <p>I collect unusual names from maps (like Snape and Dursley), saints (Hedwig), and war memorials (Lockhart). Some are completely invented, like Malfoy, Flitwick, and Quidditch!</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">What does the "K" stand for? <span>+</span></div>
+                <div class="faq-answer">
+                    <p>Joanne does not have a middle name. Her publisher requested she use two initials to appeal to a broader audience of young boys, so she adopted "K" in honor of her paternal grandmother, Kathleen.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">What was your favorite subject in school? <span>+</span></div>
+                <div class="faq-answer">
+                    <p>English, of course! I actually wrote my very first continuous novel drafts tucked away during my English classes.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">What advice do you give to aspiring writers? <span>+</span></div>
+                <div class="faq-answer">
+                    <p>Read as much as you possibly can. It gives you an understanding of what makes good writing and what fails. Secondly, accept that you will write bad drafts before you write great ones—just keep pushing through!</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 J.K. Rowling Fan Project Portal.</p>
+        <p class="credit">Created by Samira Abdi</p>
+    </footer>
+
+    <script>
+        function switchTab(tabId) {
+            // Hide all content sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(sec => sec.classList.remove('active-section'));
+
+            // Remove active color highlighting from navigation links
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+
+            // Show selected section and highlight matching link
+            document.getElementById(tabId).classList.add('active-section');
+            document.getElementById('nav-' + tabId).classList.add('active');
+
+            // Scroll cleanly to top when tabs shift
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // Accordion functionality for FAQ tab expansion
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('open');
+                
+                const sign = question.querySelector('span');
+                sign.textContent = item.classList.contains('open') ? '−' : '+';
+            });
+        });
+    </script>
+</body>
+</html>
